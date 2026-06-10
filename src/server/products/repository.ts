@@ -98,9 +98,9 @@ export async function updateReservation(
 ): Promise<Product | null> {
   const [row] = await rows(
     `update products
-set purchase_name = $1,
+set purchase_name = $1::text,
     status = case
-      when $1 is null then 'available'
+      when $1::text is null then 'available'
       else 'reserved'
     end,
     updated_at = now()

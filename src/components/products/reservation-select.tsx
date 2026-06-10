@@ -9,12 +9,22 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 import { PERSON_NAMES } from "@/server/products/constants";
 
 import type { PersonName, ProductForView } from "./product-view-types";
 import { NONE_PURCHASER_VALUE } from "./product-view-types";
+
+function subjectJosa(name: string) {
+  const code = name.charCodeAt(name.length - 1);
+  if (code < 0xac00 || code > 0xd7a3) {
+    return "이(가)";
+  }
+  return (code - 0xac00) % 28 > 0 ? "이가" : "가";
+}
+
+const inlineTriggerClassName =
+  "inline-flex h-auto gap-0.5 rounded-sm border-0 p-0 align-baseline font-semibold text-primary underline decoration-primary/40 underline-offset-4 data-[size=default]:h-auto [&_svg]:text-primary!";
 
 export function ReservationSelect({ product }: { product: ProductForView }) {
   const router = useRouter();
@@ -38,34 +48,56 @@ export function ReservationSelect({ product }: { product: ProductForView }) {
     });
   }
 
+  if (product.status === "completed") {
+    return (
+      <p className="text-sm leading-6 text-muted-foreground">
+        거래가 완료된 물건이에요.
+      </p>
+    );
+  }
+
   return (
     <div className="space-y-2">
-      <div className="flex items-center justify-between gap-3">
-        <label
-          className="text-sm font-medium"
-          htmlFor={`reservation-${product.id}`}
+      <p className="text-sm leading-6">
+        <Select
+          value={value}
+          onValueChange={handleValueChange}
+          disabled={disabled}
         >
-          예약자
-        </label>
-        {product.status === "completed" ? (
-          <span className="text-xs text-muted-foreground">
-            거래가 완료된 상품이에요.
-          </span>
-        ) : null}
-      </div>
-      <Select value={value} onValueChange={handleValueChange} disabled={disabled}>
-        <SelectTrigger id={`reservation-${product.id}`} className="w-full">
-          <SelectValue placeholder="예약자를 선택하세요" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value={NONE_PURCHASER_VALUE}>없음</SelectItem>
-          {PERSON_NAMES.map((name) => (
-            <SelectItem key={name} value={name}>
-              {name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+          {product.purchaseName ? (
+            <>
+              이 물건,{" "}
+              <SelectTrigger
+                id={`reservation-${product.id}`}
+                aria-label="예약자 변경"
+                className={inlineTriggerClassName}
+              >
+                {product.purchaseName + subjectJosa(product.purchaseName)}
+              </SelectTrigger>{" "}
+              예약했어요
+            </>
+          ) : (
+            <>
+              아직 예약한 사람이 없어요.{" "}
+              <SelectTrigger
+                id={`reservation-${product.id}`}
+                aria-label="예약자 선택"
+                className={inlineTriggerClassName}
+              >
+                예약하기
+              </SelectTrigger>
+            </>
+          )}
+          <SelectContent position="popper" align="start">
+            <SelectItem value={NONE_PURCHASER_VALUE}>없음</SelectItem>
+            {PERSON_NAMES.map((name) => (
+              <SelectItem key={name} value={name}>
+                {name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </p>
       {message ? (
         <p className="rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">
           {message}
