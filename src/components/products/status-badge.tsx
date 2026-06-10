@@ -4,9 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import type { ProductStatus } from "./product-view-types";
 
 const statusClassName: Record<ProductStatus, string> = {
-  available: "border-emerald-200 bg-emerald-50 text-emerald-700",
-  reserved: "border-amber-200 bg-amber-50 text-amber-700",
-  completed: "border-zinc-200 bg-zinc-100 text-zinc-600",
+  available: "border-[#b9e2d1] bg-[#e7f6ef] text-[#278866]",
+  reserved: "border-[#f0dca2] bg-[#fdf6e0] text-[#8a6116]",
+  completed: "border-[#e3dfd7] bg-[#f1efe9] text-[#76716a]",
 };
 
 export function StatusBadge({ status }: { status: ProductStatus }) {

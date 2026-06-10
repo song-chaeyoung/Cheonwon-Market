@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useActionState } from "react";
 
 import { submitEntryCodeAction } from "@/app/enter/actions";
@@ -24,10 +25,17 @@ export function AccessCodeScreen() {
   );
 
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-muted/30 px-4 py-10">
-      <section className="w-full max-w-sm space-y-6">
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-muted-foreground">천원마켓</p>
+    <main className="flex min-h-dvh items-center justify-center bg-background px-4 py-10">
+      <section className="w-full max-w-sm space-y-6 rounded-lg border bg-card p-6">
+        <div className="space-y-3">
+          <Image
+            src="/brand/cheonwon-mark.svg"
+            alt=""
+            width={56}
+            height={42}
+            unoptimized
+          />
+          <p className="text-sm font-semibold text-primary">천원마켓</p>
           <h1 className="text-2xl font-semibold tracking-normal">
             입장 코드를 입력해주세요
           </h1>

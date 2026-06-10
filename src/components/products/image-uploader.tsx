@@ -95,6 +95,11 @@ export function ImageUploader({
                   sizes="(min-width: 640px) 20vw, 50vw"
                   className="object-cover"
                 />
+                {index === 0 ? (
+                  <span className="absolute left-1.5 top-1.5 rounded-sm bg-primary px-1.5 py-0.5 text-[11px] font-semibold text-primary-foreground">
+                    대표
+                  </span>
+                ) : null}
               </div>
               <Button
                 type="button"
@@ -110,7 +115,7 @@ export function ImageUploader({
           ))}
         </div>
       ) : (
-        <div className="rounded-lg border border-dashed px-3 py-6 text-center text-sm text-muted-foreground">
+        <div className="rounded-lg border border-dashed border-primary/40 bg-primary/5 px-3 py-6 text-center text-sm text-muted-foreground">
           아직 올린 이미지가 없어요.
         </div>
       )}

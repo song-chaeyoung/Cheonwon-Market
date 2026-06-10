@@ -50,100 +50,112 @@ export function ProductForm({
   const [state, formAction, pending] = useActionState(action, initialState);
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form action={formAction} className="space-y-8">
       {product ? <input type="hidden" name="id" value={product.id} /> : null}
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="space-y-2 sm:col-span-2">
-          <Label htmlFor="title">상품명</Label>
-          <Input
-            id="title"
-            name="title"
-            defaultValue={product?.title ?? ""}
-            maxLength={80}
-            required
+      <section className="space-y-4">
+        <h2 className="text-sm font-semibold">사진</h2>
+        <ImageUploader initialUrls={product?.imageUrls} />
+      </section>
+      <section className="space-y-4 border-t pt-6">
+        <h2 className="text-sm font-semibold">기본 정보</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-2 sm:col-span-2">
+            <Label htmlFor="title">상품명</Label>
+            <Input
+              id="title"
+              name="title"
+              defaultValue={product?.title ?? ""}
+              maxLength={80}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="price">가격</Label>
+            <Select name="price" defaultValue={String(product?.price ?? 1000)}>
+              <SelectTrigger id="price" className="w-full">
+                <SelectValue placeholder="가격을 선택하세요" />
+              </SelectTrigger>
+              <SelectContent>
+                {PRICE_OPTIONS.map((price) => (
+                  <SelectItem key={price} value={String(price)}>
+                    {PRICE_DISPLAY_LABELS[price]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="sellerName">등록자</Label>
+            <Select
+              name="sellerName"
+              defaultValue={product?.sellerName ?? "채영"}
+            >
+              <SelectTrigger id="sellerName" className="w-full">
+                <SelectValue placeholder="이름을 선택하세요" />
+              </SelectTrigger>
+              <SelectContent>
+                {PERSON_NAMES.map((name) => (
+                  <SelectItem key={name} value={name}>
+                    {name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="category">카테고리</Label>
+            <Select name="category" defaultValue={product?.category ?? "etc"}>
+              <SelectTrigger id="category" className="w-full">
+                <SelectValue placeholder="카테고리를 선택하세요" />
+              </SelectTrigger>
+              <SelectContent>
+                {CATEGORY_OPTIONS.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {CATEGORY_LABELS[category]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="condition">상품 컨디션</Label>
+            <Select name="condition" defaultValue={product?.condition ?? "used"}>
+              <SelectTrigger id="condition" className="w-full">
+                <SelectValue placeholder="컨디션을 선택하세요" />
+              </SelectTrigger>
+              <SelectContent>
+                {CONDITION_OPTIONS.map((condition) => (
+                  <SelectItem key={condition} value={condition}>
+                    {CONDITION_LABELS[condition]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </section>
+      <section className="space-y-4 border-t pt-6">
+        <h2 className="text-sm font-semibold">설명과 메모</h2>
+        <div className="space-y-2">
+          <Label htmlFor="description">설명</Label>
+          <Textarea
+            id="description"
+            name="description"
+            defaultValue={product?.description ?? ""}
+            rows={5}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="price">가격</Label>
-          <Select name="price" defaultValue={String(product?.price ?? 1000)}>
-            <SelectTrigger id="price" className="w-full">
-              <SelectValue placeholder="가격을 선택하세요" />
-            </SelectTrigger>
-            <SelectContent>
-              {PRICE_OPTIONS.map((price) => (
-                <SelectItem key={price} value={String(price)}>
-                  {PRICE_DISPLAY_LABELS[price]}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Label htmlFor="flawNote">하자 메모</Label>
+          <Textarea
+            id="flawNote"
+            name="flawNote"
+            defaultValue={product?.flawNote ?? ""}
+            rows={3}
+          />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="sellerName">등록자</Label>
-          <Select name="sellerName" defaultValue={product?.sellerName ?? "채영"}>
-            <SelectTrigger id="sellerName" className="w-full">
-              <SelectValue placeholder="이름을 선택하세요" />
-            </SelectTrigger>
-            <SelectContent>
-              {PERSON_NAMES.map((name) => (
-                <SelectItem key={name} value={name}>
-                  {name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="category">카테고리</Label>
-          <Select name="category" defaultValue={product?.category ?? "etc"}>
-            <SelectTrigger id="category" className="w-full">
-              <SelectValue placeholder="카테고리를 선택하세요" />
-            </SelectTrigger>
-            <SelectContent>
-              {CATEGORY_OPTIONS.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {CATEGORY_LABELS[category]}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="condition">상품 컨디션</Label>
-          <Select name="condition" defaultValue={product?.condition ?? "used"}>
-            <SelectTrigger id="condition" className="w-full">
-              <SelectValue placeholder="컨디션을 선택하세요" />
-            </SelectTrigger>
-            <SelectContent>
-              {CONDITION_OPTIONS.map((condition) => (
-                <SelectItem key={condition} value={condition}>
-                  {CONDITION_LABELS[condition]}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      <ImageUploader initialUrls={product?.imageUrls} />
-      <div className="space-y-2">
-        <Label htmlFor="description">설명</Label>
-        <Textarea
-          id="description"
-          name="description"
-          defaultValue={product?.description ?? ""}
-          rows={5}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="flawNote">하자 메모</Label>
-        <Textarea
-          id="flawNote"
-          name="flawNote"
-          defaultValue={product?.flawNote ?? ""}
-          rows={3}
-        />
-      </div>
-      <div className="space-y-2">
+      </section>
+      <div className="space-y-2 border-t pt-6">
         <Label htmlFor="editPassword">수정 비밀번호</Label>
         <Input
           id="editPassword"

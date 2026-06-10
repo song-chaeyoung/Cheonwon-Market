@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -25,16 +26,23 @@ export default async function Home() {
   const products = await listProducts();
 
   return (
-    <main className="min-h-dvh bg-muted/30">
+    <main className="min-h-dvh bg-background">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
-        <header className="flex flex-col gap-4 border-b bg-background/80 py-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="space-y-1">
-            <p className="text-sm font-medium text-muted-foreground">
-              친구 모임 중고 예약장
-            </p>
-            <h1 className="text-2xl font-semibold tracking-normal">
-              천원마켓
-            </h1>
+        <header className="flex flex-col gap-4 border-b py-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/brand/cheonwon-mark.svg"
+              alt=""
+              width={48}
+              height={36}
+              unoptimized
+            />
+            <div className="space-y-1">
+              <h1 className="text-2xl font-bold tracking-normal">천원마켓</h1>
+              <p className="text-sm font-medium text-muted-foreground">
+                공짜부터 천원까지, 가볍게 예약
+              </p>
+            </div>
           </div>
           <Button asChild className="w-full sm:w-auto">
             <Link href="/products/new">상품 올리기</Link>

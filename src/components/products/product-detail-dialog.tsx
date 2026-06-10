@@ -87,7 +87,9 @@ export function ProductDetailDialog({ product }: { product: ProductForView }) {
               </p>
             </section>
           ) : null}
-          <ReservationSelect product={product} />
+          <div className="border-t pt-4">
+            <ReservationSelect product={product} />
+          </div>
         </div>
       </div>
       <DialogFooter>
