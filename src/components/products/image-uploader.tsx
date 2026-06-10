@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { type ChangeEvent, useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
 const MAX_IMAGES = 5;
 
@@ -22,6 +22,7 @@ export function ImageUploader({
   const [imageUrls, setImageUrls] = useState(initialUrls);
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const canUpload = !pending && imageUrls.length < MAX_IMAGES;
 
   async function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.target.files ?? []);
@@ -69,15 +70,27 @@ export function ImageUploader({
   return (
     <div className="space-y-3">
       <div className="space-y-2">
-        <Label htmlFor="product-images">이미지</Label>
-        <Input
+        <p className="text-sm font-medium">이미지</p>
+        <input
           id="product-images"
           type="file"
           accept="image/jpeg,image/png,image/webp"
           multiple
           onChange={handleChange}
-          disabled={pending || imageUrls.length >= MAX_IMAGES}
+          disabled={!canUpload}
+          className="peer sr-only"
         />
+        <Label
+          htmlFor="product-images"
+          aria-disabled={!canUpload}
+          className={cn(
+            buttonVariants({ variant: "outline" }),
+            "w-full cursor-pointer peer-focus-visible:border-ring peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50 sm:w-auto",
+            !canUpload && "pointer-events-none opacity-50",
+          )}
+        >
+          이미지 선택
+        </Label>
         <p className="text-xs text-muted-foreground">
           1장 이상 5장 이하, JPG/PNG/WebP 파일을 올려주세요.
         </p>
