@@ -12,6 +12,8 @@
     "test:unit": "vitest run tests/unit",
     "test:contract": "vitest run tests/contracts",
     "test:e2e": "playwright test",
+    "db:migrate": "node scripts/migrate.mjs",
+    "db:migrate:dry-run": "node scripts/migrate.mjs --dry-run",
     "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
   "dependencies": {
