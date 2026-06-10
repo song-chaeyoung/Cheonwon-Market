@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>천원마켓 로고/파비콘 시안</title>
+    <style>
+      :root {
+        --ink: #1f2933;
+        --muted: #687482;
+        --line: #dfe5ea;
+        --paper: #fffdf8;
+        --mint: #65c6a4;
+        --mint-dark: #278866;
+        --tomato: #ed6a5a;
+        --amber: #f6c453;
+        --blue: #6da7e0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(180deg, #fffaf0 0%, #f7fbf8 46%, #f8fafc 100%);
+        color: var(--ink);
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      main {
+        width: min(1180px, calc(100vw - 40px));
+        margin: 0 auto;
+        padding: 40px 0 56px;
+      }
+
+      header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: end;
+        padding-bottom: 24px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 32px;
+        line-height: 1.15;
+      }
+
+      .lead {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .note {
+        max-width: 340px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.72);
+        padding: 12px 14px;
+        color: #4e5966;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        min-height: 360px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.86);
+        box-shadow: 0 18px 45px rgba(31, 41, 51, 0.08);
+        padding: 22px;
+      }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: flex-start;
+        margin-bottom: 22px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.25;
+      }
+
+      .fit {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .score {
+        flex: 0 0 auto;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        padding: 6px 10px;
+        color: #52606d;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .preview {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 20px;
+        align-items: center;
+        min-height: 182px;
+      }
+
+      .logo-panel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 160px;
+        border-radius: 8px;
+        background: #f8fafc;
+        border: 1px solid #e8edf2;
+      }
+
+      .favicon-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      .favicon-sample {
+        display: grid;
+        gap: 8px;
+        justify-items: center;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .tiny-box {
+        display: grid;
+        place-items: center;
+        border: 1px solid #d7dee6;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 244, 248, 0.9));
+        border-radius: 6px;
+      }
+
+      .tiny-box.size-48 {
+        width: 48px;
+        height: 48px;
+      }
+
+      .tiny-box.size-32 {
+        width: 32px;
+        height: 32px;
+      }
+
+      .tiny-box.size-16 {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+      }
+
+      .use {
+        margin: 18px 0 0;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        color: #4e5966;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .wordmark strong {
+        display: block;
+        font-size: 30px;
+        line-height: 1;
+      }
+
+      .wordmark span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .tag-mark {
+        position: relative;
+        width: 76px;
+        height: 56px;
+        border-radius: 16px 18px 18px 16px;
+        background: var(--mint);
+        transform: rotate(-6deg);
+        box-shadow: inset 0 -5px 0 rgba(31, 41, 51, 0.09);
+      }
+
+      .tag-mark::before {
+        content: "";
+        position: absolute;
+        left: -14px;
+        top: 16px;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-right: 17px solid var(--mint);
+      }
+
+      .tag-mark::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 22px;
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #fffdf8;
+      }
+
+      .tag-won {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding-left: 8px;
+        color: #fffdf8;
+        font-size: 30px;
+        font-weight: 950;
+      }
+
+      .basket-mark {
+        position: relative;
+        width: 76px;
+        height: 64px;
+      }
+
+      .basket-body {
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        bottom: 4px;
+        height: 42px;
+        border: 5px solid var(--tomato);
+        border-radius: 8px 8px 18px 18px;
+        background: #fff3e4;
+      }
+
+      .basket-handle {
+        position: absolute;
+        left: 22px;
+        top: 0;
+        width: 32px;
+        height: 30px;
+        border: 5px solid var(--tomato);
+        border-bottom: 0;
+        border-radius: 18px 18px 0 0;
+      }
+
+      .basket-coin {
+        position: absolute;
+        right: 0;
+        top: 8px;
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: var(--amber);
+        color: #7a4d00;
+        font-size: 18px;
+        font-weight: 900;
+        box-shadow: 0 4px 0 rgba(31, 41, 51, 0.08);
+      }
+
+      .friends-mark {
+        position: relative;
+        width: 82px;
+        height: 68px;
+      }
+
+      .bubble {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        border: 4px solid #ffffff;
+        border-radius: 999px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 900;
+        box-shadow: 0 8px 18px rgba(31, 41, 51, 0.12);
+      }
+
+      .bubble.one {
+        left: 0;
+        top: 18px;
+        width: 42px;
+        height: 42px;
+        background: var(--mint);
+      }
+
+      .bubble.two {
+        left: 27px;
+        top: 0;
+        width: 44px;
+        height: 44px;
+        background: var(--blue);
+      }
+
+      .bubble.three {
+        right: 0;
+        bottom: 2px;
+        width: 38px;
+        height: 38px;
+        background: var(--tomato);
+      }
+
+      .sticker-mark {
+        position: relative;
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+        background: #fff;
+        border: 5px solid var(--ink);
+        box-shadow: 8px 8px 0 var(--amber);
+        transform: rotate(3deg);
+      }
+
+      .sticker-mark::before {
+        content: "";
+        position: absolute;
+        right: -5px;
+        bottom: -5px;
+        width: 24px;
+        height: 24px;
+        border-radius: 16px 0 14px 0;
+        background: var(--mint);
+        border-left: 5px solid var(--ink);
+        border-top: 5px solid var(--ink);
+      }
+
+      .sticker-text {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: var(--ink);
+        font-size: 24px;
+        font-weight: 950;
+      }
+
+      .mini {
+        transform: scale(0.55);
+      }
+
+      .micro {
+        transform: scale(0.25);
+      }
+
+      @media (max-width: 880px) {
+        header,
+        .grid,
+        .preview {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          min-height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>천원마켓 로고/파비콘 방향</h1>
+          <p class="lead">친구끼리 쓰는 가벼운 예약 장터라는 점을 기준으로, 큰 로고와 16px 파비콘을 함께 비교합니다.</p>
+        </div>
+        <div class="note">
+          파비콘은 작은 크기에서 글자가 잘 안 보이므로, 복잡한 `1000`보다는 태그, 바구니, 동전, 사람 같은 단순한 실루엣이 유리합니다.
+        </div>
+      </header>
+
+      <section class="grid">
+        <article class="card">
+          <div class="card-top">
+            <div>
+              <p class="eyebrow">A / 추천</p>
+              <h2>가격표 태그 + 원화 기호</h2>
+              <p class="fit">천원/오백원/공짜 정책이 바로 읽히고, 파비콘에서도 가장 덜 무너집니다.</p>
+            </div>
+            <div class="score">favicon strong</div>
+          </div>
+          <div class="preview">
+            <div class="logo-panel">
+              <div class="wordmark">
+                <div class="tag-mark"><div class="tag-won">₩</div></div>
+                <div>
+                  <strong>천원마켓</strong>
+                  <span>공짜부터 천원까지, 가볍게 예약</span>
+                </div>
+              </div>
+            </div>
+            <div class="favicon-strip">
+              <div class="favicon-sample"><div class="tiny-box size-48"><div class="tag-mark mini"><div class="tag-won">₩</div></div></div>48</div>
+              <div class="favicon-sample"><div class="tiny-box size-32"><div class="tag-mark mini"><div class="tag-won">₩</div></div></div>32</div>
+              <div class="favicon-sample"><div class="tiny-box size-16"><div class="tag-mark micro"><div class="tag-won">₩</div></div></div>16</div>
+              <div class="favicon-sample"><div class="tiny-box size-16" style="background:#65c6a4;color:#fff;font-weight:900">₩</div>alt</div>
+            </div>
+          </div>
+          <p class="use">실제 적용 시 파비콘은 태그 모양을 단순화하고, 앱 헤더에서는 워드마크와 같이 쓰는 조합이 좋습니다.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div>
+              <p class="eyebrow">B</p>
+              <h2>장바구니 + 1 코인</h2>
+              <p class="fit">마켓 느낌이 선명합니다. 다만 커머스 서비스처럼 보일 수 있어 톤 조절이 필요합니다.</p>
+            </div>
+            <div class="score">market clear</div>
+          </div>
+          <div class="preview">
+            <div class="logo-panel">
+              <div class="wordmark">
+                <div class="basket-mark">
+                  <div class="basket-handle"></div>
+                  <div class="basket-body"></div>
+                  <div class="basket-coin">1</div>
+                </div>
+                <div>
+                  <strong>천원마켓</strong>
+                  <span>소소한 물건을 친구에게 넘기는 곳</span>
+                </div>
+              </div>
+            </div>
+            <div class="favicon-strip">
+              <div class="favicon-sample"><div class="tiny-box size-48"><div class="basket-mark mini"><div class="basket-handle"></div><div class="basket-body"></div><div class="basket-coin">1</div></div></div>48</div>
+              <div class="favicon-sample"><div class="tiny-box size-32"><div class="basket-mark mini"><div class="basket-handle"></div><div class="basket-body"></div><div class="basket-coin">1</div></div></div>32</div>
+              <div class="favicon-sample"><div class="tiny-box size-16" style="background:#ed6a5a;color:#fff;font-weight:900">1</div>16</div>
+              <div class="favicon-sample"><div class="tiny-box size-16" style="background:#f6c453;color:#7a4d00;font-weight:900">1</div>alt</div>
+            </div>
+          </div>
+          <p class="use">제품이 커머스처럼 보이는 걸 피하려면 바구니보다 손그림에 가까운 바구니 실루엣으로 낮춰야 합니다.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div>
+              <p class="eyebrow">C</p>
+              <h2>세 명의 친구 토큰</h2>
+              <p class="fit">채영, 유나, 비주처럼 제한된 멤버가 쓰는 서비스라는 정체성이 가장 잘 드러납니다.</p>
+            </div>
+            <div class="score">friendly</div>
+          </div>
+          <div class="preview">
+            <div class="logo-panel">
+              <div class="wordmark">
+                <div class="friends-mark">
+                  <div class="bubble one">ㅊ</div>
+                  <div class="bubble two">ㅇ</div>
+                  <div class="bubble three">ㅂ</div>
+                </div>
+                <div>
+                  <strong>천원마켓</strong>
+                  <span>우리끼리 올리고 예약하는 보드</span>
+                </div>
+              </div>
+            </div>
+            <div class="favicon-strip">
+              <div class="favicon-sample"><div class="tiny-box size-48"><div class="friends-mark mini"><div class="bubble one">ㅊ</div><div class="bubble two">ㅇ</div><div class="bubble three">ㅂ</div></div></div>48</div>
+              <div class="favicon-sample"><div class="tiny-box size-32"><div class="friends-mark mini"><div class="bubble one">ㅊ</div><div class="bubble two">ㅇ</div><div class="bubble three">ㅂ</div></div></div>32</div>
+              <div class="favicon-sample"><div class="tiny-box size-16" style="background:#6da7e0;color:#fff;font-weight:900">ㅇ</div>16</div>
+              <div class="favicon-sample"><div class="tiny-box size-16" style="background:#1f2933;color:#fff;font-weight:900">3</div>alt</div>
+            </div>
+          </div>
+          <p class="use">서비스가 세 명 전용으로 오래 갈 계획이면 좋습니다. 멤버가 바뀔 가능성이 있으면 브랜드가 좁아질 수 있습니다.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div>
+              <p class="eyebrow">D</p>
+              <h2>스티커 카드 + 1</h2>
+              <p class="fit">물건에 가격 스티커를 붙여둔 느낌입니다. 귀엽지만 너무 앱 아이콘처럼 보일 수 있습니다.</p>
+            </div>
+            <div class="score">playful</div>
+          </div>
+          <div class="preview">
+            <div class="logo-panel">
+              <div class="wordmark">
+                <div class="sticker-mark"><div class="sticker-text">1</div></div>
+                <div>
+                  <strong>천원마켓</strong>
+                  <span>공짜부터 천원까지, 가볍게 예약</span>
+                </div>
+              </div>
+            </div>
+            <div class="favicon-strip">
+              <div class="favicon-sample"><div class="tiny-box size-48"><div class="sticker-mark mini"><div class="sticker-text">1</div></div></div>48</div>
+              <div class="favicon-sample"><div class="tiny-box size-32"><div class="sticker-mark mini"><div class="sticker-text">1</div></div></div>32</div>
+              <div class="favicon-sample"><div class="tiny-box size-16" style="background:#fff;border:2px solid #1f2933;color:#1f2933;font-weight:900">1</div>16</div>
+              <div class="favicon-sample"><div class="tiny-box size-16" style="background:#f6c453;color:#1f2933;font-weight:900">1</div>alt</div>
+            </div>
+          </div>
+          <p class="use">헤더 로고로는 좋지만 16px에서는 스티커 접힘이 거의 사라져, 파비콘용 축약 버전이 필요합니다.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
