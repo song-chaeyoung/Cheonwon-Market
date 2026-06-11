@@ -2,9 +2,11 @@
 
 import { useMemo, useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 import { EmptyProducts } from "./empty-products";
+import { ProductEmptyState } from "./product-empty-state";
 import { ProductFilterControls } from "./product-filter-controls";
 import {
   DEFAULT_PRODUCT_FILTERS,
@@ -35,12 +37,20 @@ export function ProductList({ products }: { products: ProductForView[] }) {
         onFiltersChange={setFilters}
       />
       {filteredProducts.length === 0 ? (
-        <section className="flex min-h-60 flex-col items-center justify-center gap-2 rounded-lg border border-dashed bg-background px-4 py-10 text-center">
-          <p className="text-lg font-semibold">조건에 맞는 상품이 없어요</p>
-          <p className="text-sm text-muted-foreground">
-            필터를 줄이면 다시 상품을 볼 수 있어요.
-          </p>
-        </section>
+        <ProductEmptyState
+          title="조건에 맞는 상품이 없어요."
+          description="필터를 초기화하면 다시 전체 상품을 볼 수 있어요."
+          action={
+            <Button
+              type="button"
+              variant="link"
+              className="h-auto px-0"
+              onClick={() => setFilters(DEFAULT_PRODUCT_FILTERS)}
+            >
+              필터 초기화
+            </Button>
+          }
+        />
       ) : (
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProducts.map((product) => (
