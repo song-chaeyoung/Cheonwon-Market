@@ -4,6 +4,10 @@ import type {
   PersonName,
   ProductStatus,
 } from "./constants";
+import {
+  encodeProductCursor,
+  type ProductCursor,
+} from "./pagination";
 import type {
   Product,
   ProductCreateInput,
@@ -31,12 +35,85 @@ const PRODUCT_COLUMNS = `
 const rows = async (query: string, params: unknown[] = []): Promise<ProductRow[]> =>
   (await getSql().query(query, params)) as ProductRow[];
 
+export type ProductPageFilters = {
+  freeOnly?: boolean;
+  unreservedOnly?: boolean;
+  sellerName?: PersonName | "all";
+  purchaseName?: PersonName | "all";
+};
+
+export type ProductPageInput = {
+  limit: number;
+  cursor?: ProductCursor | null;
+  filters?: ProductPageFilters;
+};
+
+export type ProductPage = {
+  items: Product[];
+  nextCursor: string | null;
+};
+
 export async function listProducts(): Promise<Product[]> {
   const result = await rows(
     `select ${PRODUCT_COLUMNS} from products order by created_at desc`,
   );
 
   return result.map(productFromRow);
+}
+
+export async function listProductPage({
+  limit,
+  cursor = null,
+  filters = {},
+}: ProductPageInput): Promise<ProductPage> {
+  const whereClauses: string[] = [];
+  const params: unknown[] = [];
+
+  if (cursor) {
+    params.push(cursor.createdAt, cursor.id);
+    whereClauses.push(
+      `(created_at < $${params.length - 1} or (created_at = $${params.length - 1} and id < $${params.length}))`,
+    );
+  }
+
+  if (filters.freeOnly) {
+    whereClauses.push("price = 0");
+  }
+
+  if (filters.unreservedOnly) {
+    whereClauses.push("status = 'available'");
+  }
+
+  if (filters.sellerName && filters.sellerName !== "all") {
+    params.push(filters.sellerName);
+    whereClauses.push(`seller_name = $${params.length}`);
+  }
+
+  if (filters.purchaseName && filters.purchaseName !== "all") {
+    params.push(filters.purchaseName);
+    whereClauses.push(`purchase_name = $${params.length}`);
+  }
+
+  params.push(limit + 1);
+
+  const result = (await rows(
+    `select ${PRODUCT_COLUMNS}, to_char(created_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') as cursor_created_at from products${
+      whereClauses.length > 0 ? ` where ${whereClauses.join(" and ")}` : ""
+    } order by created_at desc, id desc limit $${params.length}`,
+    params,
+  )) as (ProductRow & { cursor_created_at: string })[];
+  const pageRows = result.slice(0, limit);
+  const items = pageRows.map(productFromRow);
+  const lastRow = pageRows.at(-1);
+  const nextCursor =
+    result.length > limit && lastRow
+      ? encodeProductCursor({
+          createdAt: lastRow.cursor_created_at,
+          id: lastRow.id,
+        })
+      : null;
+
+  return { items, nextCursor };
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
@@ -178,6 +255,7 @@ export async function deleteProduct(id: string): Promise<Product | null> {
 
 export const productRepository = {
   listProducts,
+  listProductPage,
   getProductById,
   getProductPasswordHash,
   createProduct,
