@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import { ScrollTopButton } from "@/components/layout/scroll-top-button";
+
 import "./globals.css";
 
 function normalizeSiteUrl(value: string | undefined) {
@@ -61,7 +64,10 @@ export default function RootLayout({
       lang="ko"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        {children}
+        <ScrollTopButton />
+      </body>
     </html>
   );
 }
