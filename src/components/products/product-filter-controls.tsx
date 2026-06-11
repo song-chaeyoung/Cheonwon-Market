@@ -1,5 +1,7 @@
 "use client";
 
+import { CheckIcon } from "lucide-react";
+
 import {
   Select,
   SelectContent,
@@ -17,6 +19,11 @@ import {
 
 const inlineTriggerClassName =
   "inline-flex h-auto gap-0.5 rounded-sm border-0 p-0 align-baseline font-semibold text-primary underline decoration-primary/40 underline-offset-4 data-[size=default]:h-auto [&_svg]:text-primary!";
+
+const checkboxChipClassName =
+  "inline-flex h-9 cursor-pointer select-none items-center gap-1.5 rounded-full border border-input bg-background px-3.5 font-medium text-muted-foreground transition-colors has-focus-visible:ring-2 has-focus-visible:ring-ring has-checked:border-primary/40 has-checked:bg-primary/10 has-checked:text-primary";
+
+const checkboxChipIconClassName = "hidden size-3.5 peer-checked:block";
 
 type ProductFilterControlsProps = {
   filters: ProductFilters;
@@ -37,33 +44,35 @@ export function ProductFilterControls({
   return (
     <section
       aria-label="상품 필터"
-      className="space-y-3 rounded-lg border bg-background px-3 py-3 sm:px-4"
+      className="space-y-3 rounded-xl border bg-card px-3 py-3 shadow-xs sm:px-4"
     >
-      <div className="flex flex-wrap items-center gap-3 text-sm">
-        <label className="inline-flex h-8 items-center gap-2 rounded-lg border border-input bg-background px-3 font-medium">
+      <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
+        <label className={checkboxChipClassName}>
           <input
             type="checkbox"
             checked={filters.freeOnly}
             onChange={(event) =>
               updateFilter("freeOnly", event.currentTarget.checked)
             }
-            className="size-4 accent-primary"
+            className="peer sr-only"
           />
+          <CheckIcon aria-hidden="true" className={checkboxChipIconClassName} />
           <span>공짜만 보기</span>
         </label>
-        <label className="inline-flex h-8 items-center gap-2 rounded-lg border border-input bg-background px-3 font-medium">
+        <label className={checkboxChipClassName}>
           <input
             type="checkbox"
             checked={filters.unreservedOnly}
             onChange={(event) =>
               updateFilter("unreservedOnly", event.currentTarget.checked)
             }
-            className="size-4 accent-primary"
+            className="peer sr-only"
           />
+          <CheckIcon aria-hidden="true" className={checkboxChipIconClassName} />
           <span>예약 안 된 것만</span>
         </label>
       </div>
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm leading-6">
+      <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm leading-6">
         <p>
           <Select
             value={filters.sellerName}
@@ -89,6 +98,7 @@ export function ProductFilterControls({
           {" "}
           등록한 상품
         </p>
+        <span aria-hidden="true" className="hidden h-4 w-px bg-border sm:block" />
         <p>
           <Select
             value={filters.purchaseName}
