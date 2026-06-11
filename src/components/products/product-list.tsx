@@ -15,6 +15,7 @@ import {
   type ProductFilters,
 } from "./product-filters";
 import { ProductCard } from "./product-card";
+import { ProductCardSkeleton } from "./product-card-skeleton";
 import { ProductDetailDialog } from "./product-detail-dialog";
 import type { ProductForView } from "./product-view-types";
 
@@ -106,6 +107,7 @@ export function ProductList({
 
   const showEmptyFilterResult =
     products.length === 0 && !hasNextPage && !isLoading && !error;
+  const loadingSkeletonCount = products.length > 0 ? 3 : 6;
 
   return (
     <div className="space-y-4">
@@ -139,12 +141,17 @@ export function ProductList({
                 <ProductDetailDialog product={product} />
               </Dialog>
             ))}
+            {isLoading
+              ? Array.from({ length: loadingSkeletonCount }, (_, index) => (
+                  <ProductCardSkeleton key={`loading-${index}`} />
+                ))
+              : null}
           </section>
           {hasNextPage ? (
             <div ref={sentinelRef} aria-hidden="true" className="h-3" />
           ) : null}
           {isLoading ? (
-            <p className="text-center text-sm text-muted-foreground">
+            <p className="sr-only" role="status">
               상품을 불러오는 중...
             </p>
           ) : null}
