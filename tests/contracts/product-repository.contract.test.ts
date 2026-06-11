@@ -40,6 +40,9 @@ describe("product repository contract", () => {
 
     expect(sql).toContain("order by created_at desc, id desc");
     expect(sql).toContain("limit $1");
+    expect(sql).toContain("at time zone 'UTC'");
+    expect(sql).toContain("HH24:MI:SS.US");
+    expect(sql).toContain("as cursor_created_at");
     expect(params).toEqual([25]);
   });
 

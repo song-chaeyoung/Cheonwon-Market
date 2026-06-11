@@ -52,6 +52,18 @@ limit $n
 
 추후 데이터가 많아지면 `created_at desc, id desc` 복합 인덱스 검토가 필요하다.
 
+### 마이크로초 정밀도 보존
+
+PostgreSQL `timestamptz`는 마이크로초(6자리) 정밀도를 저장하지만, neon 드라이버가 이를 JavaScript `Date`로 변환하면 밀리초(3자리)까지만 남고 마이크로초가 절삭된다. 이 깎인 값으로 커서를 만들면, 같은 밀리초에 생성된 행들이 커서 술어(`created_at = $1`)에서 누락되어 페이지 경계에서 상품이 사라질 수 있다.
+
+이를 막기 위해 커서의 `createdAt`은 `Date`를 거치지 않고, 쿼리에서 다음과 같이 전체 정밀도 UTC 문자열을 직접 뽑아 구성한다.
+
+```sql
+to_char(created_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') as cursor_created_at
+```
+
+즉 커서에 쓰는 `cursor_created_at`은 표시용 `createdAt`(밀리초)과 달리 마이크로초 6자리를 보존한다. 키셋 술어 로직 자체는 정확하므로, 정밀도만 맞추면 누락이 발생하지 않는다.
+
 ## 라이브러리 사용 여부
 
 단순 무한스크롤이면 `react-intersection-observer` 같은 라이브러리 없이 커스텀 훅으로 충분하다.

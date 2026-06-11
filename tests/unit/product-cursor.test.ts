@@ -15,6 +15,15 @@ describe("product cursor helpers", () => {
     expect(decodeProductCursor(encodeProductCursor(cursor))).toEqual(cursor);
   });
 
+  it("preserves microsecond precision in createdAt during round-trip", () => {
+    const cursor = {
+      createdAt: "2026-06-11T01:02:03.123456Z",
+      id: "018f3f3c-8a68-7f62-9f3a-1a2b3c4d5e6f",
+    };
+
+    expect(decodeProductCursor(encodeProductCursor(cursor))).toEqual(cursor);
+  });
+
   it("rejects malformed cursor strings", () => {
     expect(() => decodeProductCursor("not-json-or-base64")).toThrow(
       "Malformed product cursor",
