@@ -4,6 +4,7 @@ import { startTransition, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { changeReservationAction } from "@/app/products/actions";
+import { ActionMessage } from "@/components/ui/action-message";
 import {
   Select,
   SelectContent,
@@ -13,7 +14,11 @@ import {
 import { withSubjectJosa } from "@/lib/korean-text";
 import { PERSON_NAMES } from "@/server/products/constants";
 
-import type { PersonName, ProductForView } from "./product-view-types";
+import type {
+  ActionResult,
+  PersonName,
+  ProductForView,
+} from "./product-view-types";
 import { NONE_PURCHASER_VALUE } from "./product-view-types";
 
 const inlineTriggerClassName =
@@ -21,7 +26,7 @@ const inlineTriggerClassName =
 
 export function ReservationSelect({ product }: { product: ProductForView }) {
   const router = useRouter();
-  const [message, setMessage] = useState<string | null>(null);
+  const [result, setResult] = useState<ActionResult | null>(null);
   const [pending, setPending] = useState(false);
   const disabled = product.status === "completed" || pending;
 
@@ -32,10 +37,10 @@ export function ReservationSelect({ product }: { product: ProductForView }) {
       nextValue === NONE_PURCHASER_VALUE ? null : (nextValue as PersonName);
 
     setPending(true);
-    setMessage(null);
+    setResult(null);
     startTransition(async () => {
-      const result = await changeReservationAction(product.id, purchaseName);
-      setMessage(result?.message ?? null);
+      const nextResult = await changeReservationAction(product.id, purchaseName);
+      setResult(nextResult ?? null);
       setPending(false);
       router.refresh();
     });
@@ -91,10 +96,10 @@ export function ReservationSelect({ product }: { product: ProductForView }) {
           </SelectContent>
         </Select>
       </p>
-      {message ? (
-        <p className="rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">
-          {message}
-        </p>
+      {result?.message ? (
+        <ActionMessage tone={result.ok ? "success" : "error"}>
+          {result.message}
+        </ActionMessage>
       ) : null}
     </div>
   );

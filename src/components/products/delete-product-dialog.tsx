@@ -13,6 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ActionMessage } from "@/components/ui/action-message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -62,11 +63,7 @@ export function DeleteProductDialog({ productId }: { productId: string }) {
               required
             />
           </div>
-          {state.message ? (
-            <p className="rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-              {state.message}
-            </p>
-          ) : null}
+          {state.message ? <ActionMessage>{state.message}</ActionMessage> : null}
           <AlertDialogFooter>
             <AlertDialogCancel type="button">취소</AlertDialogCancel>
             <Button type="submit" variant="destructive" disabled={pending}>

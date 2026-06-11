@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 
 import { createProductAction, updateProductAction } from "@/app/products/actions";
+import { ActionMessage } from "@/components/ui/action-message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -169,9 +170,7 @@ export function ProductForm({
         </p>
       </div>
       {!state.ok && state.message ? (
-        <p className="rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-          {state.message}
-        </p>
+        <ActionMessage>{state.message}</ActionMessage>
       ) : null}
       <div className="flex flex-col-reverse gap-2 border-t pt-4 sm:flex-row sm:justify-end">
         <Button asChild variant="outline" className="w-full sm:w-auto">

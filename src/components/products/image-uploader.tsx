@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { type ChangeEvent, useState } from "react";
 
+import { ActionMessage } from "@/components/ui/action-message";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
@@ -135,11 +136,7 @@ export function ImageUploader({
       {pending ? (
         <p className="text-sm text-muted-foreground">업로드 중</p>
       ) : null}
-      {message ? (
-        <p className="rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-          {message}
-        </p>
-      ) : null}
+      {message ? <ActionMessage>{message}</ActionMessage> : null}
     </div>
   );
 }

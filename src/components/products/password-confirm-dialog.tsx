@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ActionMessage } from "@/components/ui/action-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -71,11 +72,7 @@ export function PasswordConfirmDialog({
               required
             />
           </div>
-          {message ? (
-            <p className="rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-              {message}
-            </p>
-          ) : null}
+          {message ? <ActionMessage>{message}</ActionMessage> : null}
           <DialogFooter className="mx-0 mb-0 px-0 pb-0">
             <Button type="submit" disabled={pending} className="w-full sm:w-auto">
               {pending ? "확인 중" : "수정하러 가기"}

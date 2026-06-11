@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 
 import { changeStatusAction } from "@/app/products/actions";
+import { ActionMessage } from "@/components/ui/action-message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -86,9 +87,9 @@ export function ProductStatusControl({ product }: { product: ProductForView }) {
         </div>
       </div>
       {state.message ? (
-        <p className="rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">
+        <ActionMessage tone={state.ok ? "success" : "error"}>
           {state.message}
-        </p>
+        </ActionMessage>
       ) : null}
       <Button
         type="submit"

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useActionState } from "react";
 
 import { submitEntryCodeAction } from "@/app/enter/actions";
+import { ActionMessage } from "@/components/ui/action-message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -56,9 +57,7 @@ export function AccessCodeScreen() {
             />
           </div>
           {!state.ok && state.message ? (
-            <p className="rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-              {state.message}
-            </p>
+            <ActionMessage>{state.message}</ActionMessage>
           ) : null}
           <Button type="submit" className="w-full" disabled={pending}>
             {pending ? "확인 중" : "입장하기"}
