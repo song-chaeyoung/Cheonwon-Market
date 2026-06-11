@@ -2,11 +2,24 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+function normalizeSiteUrl(value: string | undefined) {
+  const normalized = value?.trim();
+
+  if (!normalized) {
+    return undefined;
+  }
+
+  return normalized.startsWith("http://") ||
+    normalized.startsWith("https://")
+    ? normalized
+    : `https://${normalized}`;
+}
+
 const siteUrl =
-  process.env.SITE_URL ??
-  (process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000");
+  normalizeSiteUrl(process.env.SITE_URL) ??
+  normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ??
+  normalizeSiteUrl(process.env.VERCEL_URL) ??
+  "http://localhost:3000";
 const title = "천원마켓";
 const description =
   "친구들끼리 가볍게 물건을 올리고 예약하는 천원마켓입니다.";
