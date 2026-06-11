@@ -96,18 +96,21 @@ export async function listProductPage({
 
   params.push(limit + 1);
 
-  const result = await rows(
-    `select ${PRODUCT_COLUMNS} from products${
+  const result = (await rows(
+    `select ${PRODUCT_COLUMNS}, to_char(created_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') as cursor_created_at from products${
       whereClauses.length > 0 ? ` where ${whereClauses.join(" and ")}` : ""
     } order by created_at desc, id desc limit $${params.length}`,
     params,
-  );
+  )) as (ProductRow & { cursor_created_at: string })[];
   const pageRows = result.slice(0, limit);
   const items = pageRows.map(productFromRow);
-  const lastItem = items.at(-1);
+  const lastRow = pageRows.at(-1);
   const nextCursor =
-    result.length > limit && lastItem
-      ? encodeProductCursor({ createdAt: lastItem.createdAt, id: lastItem.id })
+    result.length > limit && lastRow
+      ? encodeProductCursor({
+          createdAt: lastRow.cursor_created_at,
+          id: lastRow.id,
+        })
       : null;
 
   return { items, nextCursor };
