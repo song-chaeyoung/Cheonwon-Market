@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { ProductList } from "@/components/products/product-list";
 import { Button } from "@/components/ui/button";
 import { MarketAccessError, requireMarketAccess } from "@/server/access";
-import { listProducts } from "@/server/products/repository";
+import { listProductPage } from "@/server/products/repository";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +23,7 @@ async function requirePageAccess() {
 
 export default async function Home() {
   await requirePageAccess();
-  const products = await listProducts();
+  const productPage = await listProductPage({ limit: 24 });
 
   return (
     <main className="min-h-dvh bg-background">
@@ -48,7 +48,10 @@ export default async function Home() {
             <Link href="/products/new">상품 올리기</Link>
           </Button>
         </header>
-        <ProductList products={products} />
+        <ProductList
+          initialProducts={productPage.items}
+          initialCursor={productPage.nextCursor}
+        />
       </div>
     </main>
   );
